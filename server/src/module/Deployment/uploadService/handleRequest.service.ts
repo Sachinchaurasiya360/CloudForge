@@ -1,6 +1,6 @@
 import { deployedProject } from "../../../Database/schema.js";
 import { database } from "../../../Database/index.js";
-import { DeploymentQueue } from "../../BullMQ/Queue.js";
+import { BuildQueue } from "../../BullMQ/Queue.js";
 
 export class handleRequestService {
   constructor() {}
@@ -14,11 +14,13 @@ export class handleRequestService {
     }
   }
 
-  async storeGithubUrl(githubUrl: string, deploymentId: string) {
+  async storeGithubUrl(githubUrl: string, deploymentId: string, userId: number) {
     try {
       const result = await database.insert(deployedProject).values({
         deploymentId: deploymentId,
         githubUrl: githubUrl,
+        userid: userId
+        
       });
     } catch (error) {
       console.error("DB insert error:", error);
@@ -28,7 +30,7 @@ export class handleRequestService {
 
   async pushToQueue(deploymentId: string, githubUrl: string) {
     try {
-      const pushResult = await DeploymentQueue.add("deploy", {
+      const pushResult = await BuildQueue.add("BuildQueue", {
         deploymentId: deploymentId,
         githubUrl: githubUrl,
       });

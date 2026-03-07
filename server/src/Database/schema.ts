@@ -13,12 +13,11 @@ export const projectDeployedStatus= pgEnum("project status",[
     "PENDING",
     "QUEUE",
     "BUILDING",
-    "SUCESSFUL"
+    "SUCCESSFUL"
 ])
-export const deployedProject=pgTable("deployed project",{
-    userid:integer("user id").references(()=> users.id),
-    id:serial("id").primaryKey(),
-    githubUrl:text("githhub url").notNull(),
-    deploymentId:text("deployment id").notNull(),
+export const deployedProject=pgTable("deployed_project",{
+    userid:integer("user_id").references(()=> users.id),
+    githubUrl:text("github_url").notNull(),
+    deploymentId:text("deployment_id"),
     status: projectDeployedStatus("status").default("PENDING")
 })

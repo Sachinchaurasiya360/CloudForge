@@ -2,6 +2,7 @@ import { handleRequestService } from "./handleRequest.service.js";
 import type { Request, Response } from "express";
 import { handleRequestValidator } from "./handleReques.validator.js";
 import logger from "../../../utils/Logger/logger.js";
+ 
 
 export class HandleRequestController {
   constructor(private handleRequestService: handleRequestService) {}
@@ -16,30 +17,27 @@ export class HandleRequestController {
           error: result.error.flatten().fieldErrors,
         });
       }
-      logger.info(
-        { githubUrl: result.data.githuburl },
-        "Received deployment request with GitHub URL",
-      );
+       
       const generateDeploymentId =
         await this.handleRequestService.createDeploymentId();
-      console.log(generateDeploymentId);
-      
+      const userId = (req as any).body.user.userId;
       const saveGithuburl = await this.handleRequestService.storeGithubUrl(
         result.data.githuburl,
         generateDeploymentId,
+        userId,
       );
-      console.log(saveGithuburl);
 
+      // Push the deployment request into the BullMQ queue for asynchronous processing
       const pustToQueue = await this.handleRequestService.pushToQueue(
         generateDeploymentId,
         result.data.githuburl,
       );
+      
       return res.status(200).json({
-        message:"Deployment request received and is being processed",
-        success:true,
-        deploymentId:generateDeploymentId
-      })
-
+        message: "Deployment request received and is being processed",
+        success: true,
+        deploymentId: generateDeploymentId,
+      });
     } catch (error) {
       logger.info(
         { error },

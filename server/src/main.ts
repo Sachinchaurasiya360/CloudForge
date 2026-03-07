@@ -2,9 +2,14 @@ import express from "express";
 import logger from "./utils/Logger/logger.js";
 import deploymentRouter from "./module/router/deploymentRouter.js";
 import authRouter from "./module/router/authRouter.js";
+import cookieParser from "cookie-parser"
+import "./module/BullMQ/worker.js"
+
 
 const app = express();
 const PORT = process.env.PORT;
+app.use(cookieParser())
+
 
 app.use(express.json());
 app.use("/api/v1/deployment", deploymentRouter);

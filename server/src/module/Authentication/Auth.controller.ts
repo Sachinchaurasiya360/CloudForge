@@ -104,4 +104,26 @@ export class AuthenticationController {
       });
     }
   }
+
+  verifyToken = (req: Request, res: Response, next: Function) => {
+    const token = req.cookies.token;
+    console.log("Token from cookie ", token);
+    console.log("something hit")
+    if (!token) {
+      return res.status(400).json({
+        message: "User is not Authenticated",
+        success: false,
+      });
+    }
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+    if (!verifyToken) {
+      return res.status(400).json({
+        message: "Invalid token",
+        success: false,
+      });
+    }
+    
+    req.body.user = verifyToken;
+    next();
+  };
 }
