@@ -1,7 +1,3 @@
-import { eq } from "drizzle-orm";
-import { database } from "../../Database/index.js";
-import { users } from "../../Database/schema.js";
-
 import bcrypt from "bcrypt";
 export class AuthenticationService {
   constructor() {}

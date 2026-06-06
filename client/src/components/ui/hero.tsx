@@ -44,7 +44,7 @@ export default function HeroSection() {
           {/* CTAs */}
           <div className="mb-10 flex flex-col items-center justify-center gap-3 sm:mb-0 sm:flex-row">
             <Link
-              to="/register"
+              to="/login"
               className="neumorphic-button relative w-full overflow-hidden rounded-full border border-white/10 bg-linear-to-b from-white/10 to-white/5 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base text-white shadow-lg transition-all duration-300 hover:border-[#9b87f5]/30 hover:shadow-[0_0_20px_rgba(155,135,245,0.4)] sm:w-auto"
             >
               Start building for free
