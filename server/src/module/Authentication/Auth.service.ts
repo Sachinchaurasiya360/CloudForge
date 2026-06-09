@@ -1,13 +1,12 @@
 import bcrypt from "bcrypt";
+import prisma from "../../Database/db.js";
+
 export class AuthenticationService {
   constructor() {}
 
   async isEmailExists(email: string) {
-    const [user] = await database
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
-    return user ?? null;
+    const isUserExist = await prisma.users.findFirst({ where: { email } });
+    return isUserExist;
   }
 
   async registerUser(
@@ -15,10 +14,14 @@ export class AuthenticationService {
     email: string,
     password: string,
   ): Promise<void> {
-    const createUser = await database
-      .insert(users)
-      .values({ name, email, password });
-    console.log(createUser);
+    const createUser = await prisma.users.create({
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+    
   }
 
   async hashPassword(password: string): Promise<string> {

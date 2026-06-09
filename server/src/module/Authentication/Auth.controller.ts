@@ -41,6 +41,7 @@ export class AuthenticationController {
         success: true,
       });
     } catch (error) {
+      console.error("[signup error]", error);
       return res.status(500).json({
         message: "Internal Server Error",
       });

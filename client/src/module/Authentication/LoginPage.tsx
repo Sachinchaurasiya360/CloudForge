@@ -29,66 +29,99 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#080810] flex items-center justify-center px-4">
-      {/* Ambient glows */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 70% 20%, rgba(155,135,245,0.13) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(155,135,245,0.09) 0%, transparent 50%)",
-        }}
-      />
+    <div className="min-h-screen w-full flex">
+      {/* Left — brand panel */}
+      <div className="hidden lg:flex lg:w-[44%] bg-[#0b0b12] flex-col justify-between p-12 relative overflow-hidden select-none">
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
 
-      {/* Grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+        {/* Top-left accent corner */}
+        <div className="absolute top-0 left-0 w-24 h-px bg-gradient-to-r from-[#6c5ce7] to-transparent" />
+        <div className="absolute top-0 left-0 w-px h-24 bg-gradient-to-b from-[#6c5ce7] to-transparent" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-md"
-      >
         {/* Logo */}
-        <div className="mb-8 text-center">
-          <Link to="/" className="inline-flex items-center gap-2 group">
-            <div className="h-8 w-8 rounded-lg bg-[#9b87f5]/20 border border-[#9b87f5]/30 flex items-center justify-center group-hover:bg-[#9b87f5]/30 transition-colors">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                className="h-4 w-4 text-[#9b87f5]"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
+        <div className="relative z-10 flex items-center gap-2.5">
+          <div className="h-7 w-7 border border-[#6c5ce7]/50 rounded flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 text-[#6c5ce7]" stroke="currentColor" strokeWidth={2}>
+              <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-white/90 tracking-tight">CloudForge</span>
+        </div>
+
+        {/* Body copy */}
+        <div className="relative z-10">
+          <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#6c5ce7]/60 mb-5">
+            Cloud Infrastructure
+          </p>
+          <h2 className="text-[2.1rem] font-light text-white leading-[1.18] tracking-tight">
+            Deploy with<br />
+            <span className="text-white/35">confidence.</span>
+          </h2>
+          <p className="mt-5 text-sm text-white/30 leading-relaxed max-w-[18rem]">
+            Manage servers, automate deployments, and monitor your infrastructure from one place.
+          </p>
+
+          {/* Stat pills */}
+          <div className="mt-10 flex flex-col gap-3">
+            {[
+              { label: "Uptime SLA", value: "99.99%" },
+              { label: "Deploy time", value: "< 30 s" },
+              { label: "Regions", value: "12 global" },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center justify-between max-w-[14rem]">
+                <span className="text-xs text-white/25 font-mono">{item.label}</span>
+                <span className="text-xs text-white/50 font-mono">{item.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="h-px flex-1 bg-white/[0.07]" />
+          <span className="text-[10px] font-mono text-white/15">v2.4.1</span>
+        </div>
+      </div>
+
+      {/* Right — form panel */}
+      <div className="flex-1 bg-white flex items-center justify-center px-6 py-10 lg:px-16">
+        <motion.div
+          initial={{ opacity: 0, x: 12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="w-full max-w-[22rem]"
+        >
+          {/* Mobile-only logo */}
+          <div className="lg:hidden mb-8 flex items-center gap-2">
+            <div className="h-6 w-6 border border-[#6c5ce7]/40 rounded flex items-center justify-center">
+              <svg viewBox="0 0 24 24" fill="none" className="h-3 w-3 text-[#6c5ce7]" stroke="currentColor" strokeWidth={2}>
                 <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
               </svg>
             </div>
-            <span className="text-lg font-light text-white tracking-wide">
-              CloudForge
-            </span>
-          </Link>
-        </div>
+            <span className="text-sm font-medium text-[#0b0b12]">CloudForge</span>
+          </div>
 
-        {/* Card */}
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-8 shadow-2xl">
-          <div className="mb-6">
-            <h1 className="text-2xl font-light text-white">Welcome back</h1>
-            <p className="mt-1 text-sm text-white/50">
-              Sign in to your account to continue
+          <div className="mb-8">
+            <h1 className="text-[1.6rem] font-semibold text-[#0b0b12] tracking-tight leading-tight">
+              Welcome back
+            </h1>
+            <p className="mt-1.5 text-sm text-[#6b7280]">
+              Sign in to your account to continue.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-white/60 uppercase tracking-wider">
-                Email
+              <label className="block text-xs font-medium text-[#374151] mb-1.5">
+                Email address
               </label>
               <input
                 type="email"
@@ -97,17 +130,15 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white placeholder-white/25 outline-none transition-all focus:border-[#9b87f5]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[#9b87f5]/30"
+                className="w-full border border-[#e5e7eb] rounded-lg px-3.5 py-2.5 text-sm text-[#111827] placeholder-[#c4c9d4] outline-none transition-all focus:border-[#6c5ce7] focus:ring-2 focus:ring-[#6c5ce7]/12 bg-white"
               />
             </div>
 
             {/* Password */}
             <div>
-              <div className="mb-1.5 flex items-center justify-between">
-                <label className="text-xs font-medium text-white/60 uppercase tracking-wider">
-                  Password
-                </label>
-              </div>
+              <label className="block text-xs font-medium text-[#374151] mb-1.5">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -116,33 +147,21 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 pr-11 text-sm text-white placeholder-white/25 outline-none transition-all focus:border-[#9b87f5]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[#9b87f5]/30"
+                  className="w-full border border-[#e5e7eb] rounded-lg px-3.5 py-2.5 pr-10 text-sm text-[#111827] placeholder-[#c4c9d4] outline-none transition-all focus:border-[#6c5ce7] focus:ring-2 focus:ring-[#6c5ce7]/12 bg-white"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#b0b7c3] hover:text-[#6b7280] transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="h-4 w-4"
-                      stroke="currentColor"
-                      strokeWidth={1.8}
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.8}>
                       <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
                       <line x1="1" y1="1" x2="23" y2="23" />
                     </svg>
                   ) : (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="h-4 w-4"
-                      stroke="currentColor"
-                      strokeWidth={1.8}
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.8}>
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                       <circle cx="12" cy="12" r="3" />
                     </svg>
@@ -153,66 +172,73 @@ export default function LoginPage() {
 
             {/* Error */}
             {error && (
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs text-red-400"
+                className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5"
               >
-                {error}
-              </motion.p>
+                <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 text-red-500 shrink-0 mt-px" stroke="currentColor" strokeWidth={2.2}>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <p className="text-xs text-red-600 leading-relaxed">{error}</p>
+              </motion.div>
             )}
 
             {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="neumorphic-button relative mt-2 w-full overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-[#9b87f5] to-[#7c6fd4] px-6 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:shadow-[0_0_24px_rgba(155,135,245,0.45)] disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full mt-1 bg-[#0b0b12] hover:bg-[#1a1a2e] text-white text-sm font-medium rounded-lg px-4 py-2.5 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <svg
-                    className="h-4 w-4 animate-spin"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <circle className="opacity-25" cx="12" cy="12" r="10" />
-                    <path className="opacity-75" d="M4 12a8 8 0 018-8" />
+                  <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                    <circle className="opacity-20" cx="12" cy="12" r="10" />
+                    <path className="opacity-80" d="M4 12a8 8 0 018-8" />
                   </svg>
                   Signing in…
                 </span>
               ) : (
-                "Sign in"
+                "Continue"
               )}
             </button>
           </form>
-        </div>
 
-        {/* Footer */}
-        <p className="mt-6 text-center text-xs text-white/30">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-[#9b87f5]/80 hover:text-[#9b87f5] transition-colors">
-            Sign up for free
-          </Link>
-        </p>
+          {/* Divider + test credentials */}
+          <div className="mt-7">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 bg-[#f3f4f6]" />
+              <span className="text-[10px] font-mono text-[#c4c9d4] uppercase tracking-widest">
+                Test credentials
+              </span>
+              <div className="h-px flex-1 bg-[#f3f4f6]" />
+            </div>
 
-        {/* Test credentials hint */}
-        <div className="mt-4 rounded-xl border border-[#9b87f5]/15 bg-[#9b87f5]/5 px-4 py-3 text-center">
-          <p className="mb-1 text-[10px] font-medium uppercase tracking-widest text-[#9b87f5]/50">
-            Test credentials
-          </p>
-          <div className="flex items-center justify-center gap-4 text-xs text-white/40">
-            <span>
-              <span className="text-white/25">email </span>test@gmail.com
-            </span>
-            <span className="text-white/20">·</span>
-            <span>
-              <span className="text-white/25">password </span>test@123
-            </span>
+            <div className="rounded-lg border border-[#f0f1f3] bg-[#fafafa] px-4 py-3 font-mono text-[11px] space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[#c4c9d4]">email</span>
+                <span className="text-[#6b7280]">test@gmail.com</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#c4c9d4]">pass</span>
+                <span className="text-[#6b7280]">test@123</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </motion.div>
+
+          <p className="mt-6 text-center text-xs text-[#9ca3af]">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-[#6c5ce7] hover:text-[#5b4ce0] font-medium transition-colors"
+            >
+              Sign up free
+            </Link>
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 }
