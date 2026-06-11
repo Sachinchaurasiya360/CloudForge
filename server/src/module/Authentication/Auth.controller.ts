@@ -61,7 +61,6 @@ export class AuthenticationController {
       const isUserExist = await this.authService.isEmailExists(
         result.data.email,
       );
-      console.log("User data ", isUserExist);
       if (!isUserExist) {
         return res.status(400).json({
           message: "Invalid email ",
@@ -90,7 +89,7 @@ export class AuthenticationController {
         { expiresIn: "1h" },
       );
       res.cookie("token", token, {
-        httpOnly: true,
+        httpOnly: true, //it tells the browser that this cookie must never be accessed by client-side scripts, such as JavaScript
         sameSite: "lax",
         expires: new Date(Date.now() + 60 * 60 * 1000),
       });

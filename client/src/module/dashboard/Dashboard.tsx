@@ -1,9 +1,5 @@
-
-export default function Dashboard() {
-  return <div>
-
-{/* Hello  test user somewhere 
-
+{
+  /* Hello  test user somewhere 
 A button to create a project 
 
 give option to select 
@@ -16,15 +12,16 @@ create a cron job which will automatic delte the project older than 7 days
 
 after creating the project redirect the user to the monacho code editor 
 
+*/
+}
+export default function Dashboard() {
+  return (
+    <div>
+      <div>
+        <button>Create Project </button>
 
-
-
-
-
-
-
-*/}
-
-
-  </div>
+<h1>Hello </h1>
+      </div>
+    </div>
+  );
 }

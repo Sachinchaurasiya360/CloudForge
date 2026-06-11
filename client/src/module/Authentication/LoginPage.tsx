@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 
 const HARDCODED_EMAIL = "test@gmail.com";
@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     setTimeout(() => {
       if (email === HARDCODED_EMAIL && password === HARDCODED_PASSWORD) {
-        navigate("/");
+        navigate("/dashboard");
       } else {
         setError("Invalid email or password.");
       }
@@ -218,25 +218,17 @@ export default function LoginPage() {
 
             <div className="rounded-lg border border-[#f0f1f3] bg-[#fafafa] px-4 py-3 font-mono text-[11px] space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-[#c4c9d4]">email</span>
+                <span className="text-[#c4c9d4]">Email</span>
                 <span className="text-[#6b7280]">test@gmail.com</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#c4c9d4]">pass</span>
+                <span className="text-[#c4c9d4]">Pass</span>
                 <span className="text-[#6b7280]">test@123</span>
               </div>
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs text-[#9ca3af]">
-            Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-[#6c5ce7] hover:text-[#5b4ce0] font-medium transition-colors"
-            >
-              Sign up free
-            </Link>
-          </p>
+        
         </motion.div>
       </div>
     </div>

@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const techStack = {
+  REACT: 'REACT',
+  NEXTJS: 'NEXTJS'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type techStack = (typeof techStack)[keyof typeof techStack]
