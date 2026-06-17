@@ -72,7 +72,6 @@ export class AuthenticationController {
         result.data.password,
         isUserExist.password,
       );
-      console.log("Password valid ", isPasswordValid);
       if (!isPasswordValid) {
         return res.status(400).json({
           message: "Invalid password",
@@ -91,7 +90,10 @@ export class AuthenticationController {
       res.cookie("token", token, {
         httpOnly: true, //it tells the browser that this cookie must never be accessed by client-side scripts, such as JavaScript
         sameSite: "lax",
-        expires: new Date(Date.now() + 60 * 60 * 1000),
+        // secure cookies are only sent over HTTPS — must be off for local http dev,
+        // otherwise the browser silently drops the cookie and the session never persists.
+        secure: process.env.NODE_ENV === "production",
+        expires: new Date(Date.now() + 60 * 60 * 1000)
       });
 
       return res.status(200).json({
@@ -104,26 +106,25 @@ export class AuthenticationController {
       });
     }
   }
+ 
+  logout = (_req: Request, res: Response) => {
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
 
-  verifyToken = (req: Request, res: Response, next: Function) => {
-    const token = req.cookies.token;
-    console.log("Token from cookie ", token);
-    console.log("something hit")
-    if (!token) {
-      return res.status(400).json({
-        message: "User is not Authenticated",
-        success: false,
-      });
-    }
-    const verifyToken = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
-    if (!verifyToken) {
-      return res.status(400).json({
-        message: "Invalid token",
-        success: false,
-      });
-    }
-    
-    req.body.user = verifyToken;
-    next();
+    return res.status(200).json({
+      message: "Logged out successfully",
+      success: true,
+    });
+  };
+
+  // Returns the authenticated user — used by the client to validate the session.
+  me = (req: Request, res: Response) => {
+    return res.status(200).json({
+      success: true,
+      user: (req as any).user,
+    });
   };
 }

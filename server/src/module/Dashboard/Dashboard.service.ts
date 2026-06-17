@@ -7,10 +7,12 @@ export class DashboardService {
     const createProject = await prisma.project.create({
       data: { projectName, techStack, usersId },
     });
+
+    return createProject;
   }
 
   async getAllProject(usersId: any) {
-    const getAllProject = await prisma.project.findFirst({
+    const getAllProject = await prisma.project.findMany({
       where: { usersId },
     });
     return getAllProject;

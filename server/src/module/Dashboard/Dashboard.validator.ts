@@ -6,5 +6,4 @@ export const createProjectValidator= z.object({
     techStack: z.enum(Object.values(techStack) as unknown as [techStack, ...techStack[]])
 })
 
-
-
+// We can infer the zod types and used here 

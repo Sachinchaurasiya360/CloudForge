@@ -8,11 +8,16 @@ export class DashboardController {
   async createProject(req: Request, res: Response) {
     try {
       const result = createProjectValidator.safeParse(req.body);
+      console.log(result.data)
       if (!result.success) {
-        throw new Error(result.error.flatten().toString());
-      }
+  return res.status(400).json({
+    message: "Invalid project data",
+    errors: result.error.flatten().fieldErrors,
+    success: false,
+  });
+}
       const { projectName, techStack } = result.data;
-      const usersId = (req as any).user?.id;
+      const usersId = (req as any).user?.userId;
       const createProject = await this.dashboardservice.createProject(
         projectName,
         techStack,
@@ -21,6 +26,7 @@ export class DashboardController {
       return res.status(201).json({
         message: "Project Created",
         status: true,
+        t:createProject
       });
     } catch (error) {
       return res.status(500).json({
@@ -32,12 +38,9 @@ export class DashboardController {
 
   async getCreatedProject(req: Request, res: Response) {
     try {
-      const usersId = (req as any).user?.id;
+      const usersId = (req as any).user?.userId;
       const AllProject = await this.dashboardservice.getAllProject(usersId);
-      return res.status(200).json({
-        success: true,
-        Project: AllProject,
-      });
+      return res.status(200).json(AllProject);
     } catch (error) {
       return res.status(500).json({
         message: "Internal server error",
@@ -49,7 +52,7 @@ export class DashboardController {
   async deleteProject(req: Request, res: Response) {
     try {
       const { projectId } = req.body;
-      const usersId = (req as any).user?.id;
+      const usersId = (req as any).user?.userId;
       const deleteProject = await this.dashboardservice.deleteProject(
         usersId,
         projectId,
