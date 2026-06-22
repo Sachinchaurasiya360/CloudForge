@@ -8,25 +8,30 @@ export class DashboardController {
   async createProject(req: Request, res: Response) {
     try {
       const result = createProjectValidator.safeParse(req.body);
-      console.log(result.data)
+      console.log(result.data);
       if (!result.success) {
-  return res.status(400).json({
-    message: "Invalid project data",
-    errors: result.error.flatten().fieldErrors,
-    success: false,
-  });
-}
+        return res.status(400).json({
+          message: "Invalid project data",
+          errors: result.error.flatten().fieldErrors,
+          success: false,
+        });
+      }
       const { projectName, techStack } = result.data;
       const usersId = (req as any).user?.userId;
+
+      const createCopyOnAWS =
+        await this.dashboardservice.createCopyOnAWS(techStack,projectName);
+
       const createProject = await this.dashboardservice.createProject(
         projectName,
         techStack,
         usersId,
+        createCopyOnAWS
       );
       return res.status(201).json({
         message: "Project Created",
         status: true,
-        t:createProject
+        ProjectData: createProject,
       });
     } catch (error) {
       return res.status(500).json({
